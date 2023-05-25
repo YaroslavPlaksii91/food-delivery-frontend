@@ -1,5 +1,14 @@
+'use client';
+
 import './globals.css';
 import { Montserrat } from 'next/font/google';
+import { useState } from 'react';
+import { Toaster } from 'react-hot-toast';
+
+import { CartContext } from '@/services/context';
+import { ProductType } from '@/components/Product/types';
+
+import Header from '@/components/Header';
 
 const montserrat = Montserrat({ subsets: ['latin'] });
 
@@ -17,9 +26,17 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const [orders, setOrders] = useState<ProductType[]>([]);
+
   return (
     <html lang="en">
-      <body className={montserrat.className}>{children}</body>
+      <body className={montserrat.className}>
+        <Header />
+        <CartContext.Provider value={{ orders, setOrders }}>
+          {children}
+        </CartContext.Provider>
+        <Toaster />
+      </body>
     </html>
   );
 }

@@ -1,23 +1,19 @@
-'use client';
-
 import { FC, useState } from 'react';
 
 import Shop from '../Shop';
 
-import { ShopsProps } from './types';
+import { ShopsListProps } from './types';
 
-const ShopsList: FC<ShopsProps> = ({ shops }) => {
-  const [activeButton, setActiveButton] = useState('');
-
-  const handleClick = (shopName: string) => {
-    setActiveButton(shopName);
-  };
-
+const ShopsList: FC<ShopsListProps> = ({
+  shops,
+  activeShop,
+  setActiveShop,
+}) => {
   return (
     <ul className="space-y-2">
       {shops.map(({ _id, name }) => (
         <li key={_id}>
-          <Shop name={name} onClick={handleClick} active={activeButton} />
+          <Shop name={name} onClick={setActiveShop} active={activeShop} />
         </li>
       ))}
     </ul>

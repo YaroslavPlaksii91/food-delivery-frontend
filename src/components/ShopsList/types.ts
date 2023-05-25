@@ -3,6 +3,8 @@ type ShopType = {
     name: string
 }
 
-export type ShopsProps = {
-    shops: ShopType[]
+export type ShopsListProps = {
+    shops: ShopType[],
+    activeShop: string,
+    setActiveShop: (shopName: string) => void
 }

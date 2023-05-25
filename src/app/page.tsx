@@ -1,47 +1,54 @@
-import Header from '@/components/Header';
+'use client';
+
+import { useState, useEffect } from 'react';
+
 import Sidebar from '@/components/Sidebar';
 import ShopSection from '@/components/ShopSection';
 
 import { ProductType } from '@/components/Product/types';
 
-const getShops = async () => {
-  const res = await fetch('https://food-delivery-2k6e.onrender.com/api/shops');
+import { getShops, getProducts } from '@/services/db';
 
-  if (!res.ok) {
-    throw new Error('Failed to fetch data');
-  }
+const Home = () => {
+  const [activeShop, setActiveShop] = useState('');
+  const [products, setProducts] = useState([]);
+  const [shops, setShops] = useState([]);
 
-  return res.json();
-};
+  useEffect(() => {
+    const fetchData = async () => {
+      const shopsData = await getShops();
+      setShops(shopsData.data.shops);
+    };
 
-const getProducts = async () => {
-  const res = await fetch(
-    'https://food-delivery-2k6e.onrender.com/api/products',
-  );
+    fetchData();
+  }, []);
 
-  if (!res.ok) {
-    throw new Error('Failed to fetch data');
-  }
+  useEffect(() => {
+    const fetchProducts = async () => {
+      if (activeShop) {
+        const data = await getProducts();
 
-  return res.json();
-};
+        const productsByCompany = data.data.products.filter(
+          (product: ProductType) => product.owner.name === activeShop,
+        );
 
-const Home = async () => {
-  const shopsData = await getShops();
-  const shops = shopsData.data.shops;
+        setProducts(productsByCompany);
+      }
+    };
 
-  const productsData = await getProducts();
-  const products = productsData.data.products.filter(
-    (product: ProductType) => product.owner.name === 'PizzaCompany',
-  );
+    fetchProducts();
+  }, [activeShop]);
 
   return (
     <>
-      <Header />
       <main className="">
         <h1 className="sr-only">Food delivery</h1>
         <div className="grid grid-cols-[1fr,2fr]">
-          <Sidebar shops={shops} />
+          <Sidebar
+            shops={shops}
+            activeShop={activeShop}
+            setActiveShop={setActiveShop}
+          />
           <ShopSection products={products} />
         </div>
       </main>

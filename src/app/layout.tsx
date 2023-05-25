@@ -12,7 +12,7 @@ import Header from '@/components/Header';
 
 const montserrat = Montserrat({ subsets: ['latin'] });
 
-export const metadata = {
+const metadata = {
   title: 'Food Delivery - Delicious Meals Delivered to Your Doorstep',
   description:
     'Order delicious meals from top restaurants and get them delivered to your doorstep. Enjoy a wide variety of cuisines with our convenient food delivery service.',

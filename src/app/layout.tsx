@@ -1,18 +1,14 @@
-'use client';
-
 import './globals.css';
 import { Montserrat } from 'next/font/google';
-import { useState } from 'react';
 import { Toaster } from 'react-hot-toast';
 
-import { CartContext } from '@/services/context';
-import { ProductType } from '@/components/Product/types';
+import { ContextProvider } from './context/store';
 
 import Header from '@/components/Header';
 
 const montserrat = Montserrat({ subsets: ['latin'] });
 
-const metadata = {
+export const metadata = {
   title: 'Food Delivery - Delicious Meals Delivered to Your Doorstep',
   description:
     'Order delicious meals from top restaurants and get them delivered to your doorstep. Enjoy a wide variety of cuisines with our convenient food delivery service.',
@@ -26,15 +22,11 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [orders, setOrders] = useState<ProductType[]>([]);
-
   return (
     <html lang="en">
       <body className={montserrat.className}>
         <Header />
-        <CartContext.Provider value={{ orders, setOrders }}>
-          {children}
-        </CartContext.Provider>
+        <ContextProvider>{children}</ContextProvider>
         <Toaster />
       </body>
     </html>

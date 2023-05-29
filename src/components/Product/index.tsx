@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 import Image from 'next/image';
 
-import { useCart } from '@/services/context';
+import { useCart } from '@/app/context/store';
 
 import { ProductProps } from './types';
 

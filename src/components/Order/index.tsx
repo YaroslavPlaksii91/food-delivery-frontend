@@ -2,7 +2,7 @@ import { FC, useState, ChangeEvent } from 'react';
 import Image from 'next/image';
 import { MdClose } from 'react-icons/md';
 
-import { useCart } from '@/services/context';
+import { useCart } from '@/app/context/store';
 
 const Order: FC = () => {
   const { orders, setOrders } = useCart();

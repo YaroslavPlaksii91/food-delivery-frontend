@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
-import { useCart } from '@/services/context';
+import { useCart } from '@/app/context/store';
 import { postOrders } from '@/services/db';
 
 import InputField from '../InputField';
